@@ -9,10 +9,17 @@ import UIKit
 
 class ViewController: UIViewController {
     
-
+    @IBOutlet weak var Month: UILabel!
     @IBOutlet weak var menuBottom1: UIButton!
-    
     @IBOutlet weak var menuBottom2: UIButton!
+    @IBAction func menuBotton1(_ sender: Any) {
+        update()
+    }
+    @IBAction func menuButtom2(_ sender: Any) {
+        update()
+    }
+    
+    
     @IBOutlet weak var Cell1: UIButton!
     @IBOutlet weak var Cell2: UIButton!
     @IBOutlet weak var Cell3: UIButton!
@@ -51,13 +58,54 @@ class ViewController: UIViewController {
     @IBOutlet weak var Cell36: UIButton!
     @IBOutlet weak var Cell37: UIButton!
     
-    @IBOutlet weak var Month: UILabel!
     
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setPopupButtom1()
         setPopupButtom2()
-        let cells : [CellOfData] = monthYearToCells(year: 2015, month: 4)
+        update()
+    
+    }
+    func update(){
+        
+        let thisYear: Int = Int(menuBottom1
+            .currentTitle!)!
+        let thisMonth: Int
+    
+        switch menuBottom2.currentTitle!{
+            case "Январь":
+                thisMonth = 1
+            case "Февраль":
+                thisMonth = 2
+            case "Март":
+                thisMonth = 3
+            case "Апрель":
+                thisMonth = 4
+            case "Май":
+                thisMonth = 5
+            case "Июнь":
+                thisMonth = 6
+            case "Июль":
+                thisMonth = 7
+            case "Август":
+                thisMonth = 8
+            case "Сентябрь":
+                thisMonth = 9
+            case "Октябрь":
+                thisMonth = 10
+            case "Ноябрь":
+                thisMonth = 11
+            case "Декабрь":
+                thisMonth = 12
+            default :
+                thisMonth = 0
+                print("default")
+        }
+            
+    
+        let cells : [CellOfData] = monthYearToCells(year: thisYear, month: thisMonth)
     
         let cellsView : [UIButton] = uniteCells()
         for i in 1...37{
@@ -67,13 +115,11 @@ class ViewController: UIViewController {
         }
         Month.text = "\(menuBottom1.currentTitle!)  \( menuBottom2.currentTitle!)"
     }
-
     
     func setPopupButtom1(){
-        let optionClosure = {(action : UIAction) in print (action.title)}
-        
-        menuBottom1.menu = UIMenu(children : [
-            UIAction(title:"2015", state : .on ,  handler: optionClosure),
+        let optionClosure = {(action : UIAction) in print(action.title)}
+            menuBottom1.menu = UIMenu(children : [
+            UIAction(title:"2015",  handler: optionClosure),
             UIAction(title:"2016",  handler: optionClosure),
             UIAction(title:"2017",  handler: optionClosure),
             UIAction(title:"2018",  handler: optionClosure),
@@ -81,7 +127,7 @@ class ViewController: UIViewController {
             UIAction(title:"2020",  handler: optionClosure),
             UIAction(title:"2021",  handler: optionClosure),
             UIAction(title:"2022",  handler: optionClosure),
-            UIAction(title:"2023", handler: optionClosure),
+            UIAction(title:"2023",  handler: optionClosure),
             UIAction(title:"2024",  handler: optionClosure),
             UIAction(title:"2025",  handler: optionClosure)
         ])
@@ -94,7 +140,7 @@ class ViewController: UIViewController {
     func setPopupButtom2(){
         let optionClosure = {(action : UIAction) in print (action.title)}
         menuBottom2.menu = UIMenu(children : [
-            UIAction(title:"Январь", state : .on,  handler: optionClosure),
+            UIAction(title:"Январь",   handler: optionClosure),
             UIAction(title:"Февраль",  handler: optionClosure),
             UIAction(title:"Март",  handler: optionClosure),
             UIAction(title:"Апрель",  handler: optionClosure),
@@ -176,7 +222,7 @@ class ViewController: UIViewController {
         
         
         
-        for i in numberOfFirstCell...(colvoDays+numberOfFirstCell) {
+        for i in numberOfFirstCell...(colvoDays + numberOfFirstCell-1) {
             cellsOfData [i-1] = CellOfData(activeLy: true,  chislo: i-numberOfFirstCell+1, today: false)
         }
         
@@ -203,5 +249,6 @@ class ViewController: UIViewController {
     
     
 
-}
 
+
+}
